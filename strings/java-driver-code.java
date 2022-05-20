@@ -1,28 +1,91 @@
-import java.io.*;
-import java.util.*;
 
-public class Main {
-  	// The main function reads the input in the required format.
-  	// Just complete the solve function below.
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        PrintWriter wr = new PrintWriter(System.out);
-        int T = Integer.parseInt(br.readLine().trim());
-        for(int t_i = 0; t_i < T; t_i++)
-        {
-            String str = br.readLine();
-            char out_ = solve(str);
-            System.out.println(out_);
-         }
-         wr.close();
-         br.close();
-    }
+
+import java.util.*;
   
-    static char solve(String s){
-      	// Your code goes here
-        // s is the given input string
+class GFG {
       
-        char result = ' ';
-        return result;
+   
+    static int recycledPairs(int[] a)
+    {
+        int count = 0;
+          
+   
+        Arrays.sort(a);
+        int n = a.length;
+          
+ 
+        int[] temp = new int[n];
+        Arrays.fill(temp, -1);
+        int j = 0;
+          
+        for (int i = 0; i < n - 1; i++)
+            if (a[i] != a[i + 1])
+                temp[j++] = a[i];
+        temp[j++] = a[n - 1];
+        int size = n;
+        
+        for (int i = n - 1; i >= 0; i--)
+            if (temp[i] != -1) {
+                size = i;
+                break;
+            }
+          
+   
+        HashSet<Integer> hs = new HashSet<Integer>();
+          
+        for (int i = 0; i < size + 1; i++) {
+              
+           
+            hs.clear();
+            int x = temp[i];
+              
+         
+            int d1 = (int)Math.log10(temp[i]) + 1;
+  
+            int f = (int)Math.pow(10, d1 - 1);
+            for (j = 1; j <= d1 - 1; j++) {
+                  
+                
+                int r = x % 10;
+                  
+            
+                int q = x / 10;
+                  
+                
+                x = r * f + q;
+                  
+           
+                int d2 = (int)Math.log10(x) + 1;
+                  
+               
+                if (!hs.contains(x)) {
+                    hs.add(x);
+                      
+                  
+                    if ((d1 == d2))
+                    {
+                      
+                        int position = Arrays.binarySearch(temp, i + 1, size + 1, x);
+                          
+                    
+                        if(position >= 0)
+                        {
+                            
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+          
+        
+        return count;
+    }
+ 
+    public static void main(String[] args)
+    {
+        int a[] = { 1234,3412 };
+        int result = recycledPairs(a);
+        System.out.println("Recycled pair");
     }
 }
